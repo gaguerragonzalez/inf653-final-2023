@@ -50,7 +50,7 @@ const getStateFunFact = async (req, res) => {
         res.json({ funfact: state.funfacts[Math.floor(Math.random() * state.funfacts.length)] });
     }
     else {
-        res.json({ "message": "No Fun Facts found for " + sState.state + "." })
+        res.json({ "message": "No Fun Facts found for " + sState.state })
     }
 
 }
