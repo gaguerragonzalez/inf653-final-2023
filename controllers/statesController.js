@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
+const numberFormatter = require('number-formatter');
 const State = require('../model/State');
 var staticStates;
 
@@ -57,22 +58,22 @@ const getStateFunFact = async (req, res) => {
 
 const getStateCapital = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+    res.json({ "state": state.state, "capital_city": state.capital });
 }
 
 const getStateNickname = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+    res.json({ "state": state.state, "nickname": state.capital });
 }
 
 const getStatePopulation = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+    res.json({ "state": state.state, "population": numberFormatter('#,###.', state.population) });
 }
 
 const getStateAdmission = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+    const state = state.find(st => st.code == req.params.state);
+    res.json({ "state": state.state, "admission": staticStates.admission_date });
 }
 
 const addStateFunFact = async (req, res) => {
