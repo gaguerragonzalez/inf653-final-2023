@@ -25,6 +25,6 @@ router.route('/:state/population')
     .get(verifyStates, statesController.getStatePopulation);
 
 router.route('/:state/admission')
-    .get(verifyStates, statesController.getState);
+    .get(verifyStates, statesController.getStateAdmission);
 
 module.exports = router;

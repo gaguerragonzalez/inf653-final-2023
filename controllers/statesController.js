@@ -72,8 +72,8 @@ const getStatePopulation = async (req, res) => {
 }
 
 const getStateAdmission = async (req, res) => {
-    const state = state.find(st => st.code == req.params.state);
-    res.json({ "state": state.state, "admitted": staticStates.admission_date });
+    const state = staticStates.find(st => st.code == req.params.state);
+    res.json({ "state": state.state, "admitted": state.admission_date });
 }
 
 const addStateFunFact = async (req, res) => {
