@@ -80,10 +80,10 @@ const addStateFunFact = async (req, res) => {
     const result = await State.findOne({ stateCode: req.params.state });
 
     if (!(result.funfacts instanceof Array)) {
-        res.json({'message': 'State fun facts value must be an array'});
+        res.json({ 'message': 'State fun facts value must be an array' });
     }
     else if (!result.funfacts.length) {
-        res.json({'message': 'State fun facts value required'});
+        res.json({ 'message': 'State fun facts value required' });
     }
     else {
         result.funfacts.push(...req.body.funfacts);
@@ -93,13 +93,51 @@ const addStateFunFact = async (req, res) => {
 }
 
 const editStateFunFact = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+    const sState = staticStates.find(st => st.code == req.params.state);
+    const state = await State.findOne({ stateCode: req.params.state });
+
+    if (!req.body.index) {
+        res.json({ 'message': 'State fun fact index value required' });
+    }
+    else if (!req.body.funfact) {
+        res.json({ 'message': 'State fun fact value required' });
+    }
+    else if (!state.funfacts.length) {
+        res.json({ 'message': 'No Fun Facts found for ' + sState.state })
+    }
+    else if (req.body.index <= 0 || req.body.index > state.funfacts.length) {
+        res.json({ 'message': 'No Fun Fact found at that index for ' + sState.state })
+    }
+    else {
+        state.funfacts[req.body.index - 1] = req.body.funfact;
+        state.save();
+        res.json(state);
+    }
 }
 
 const deleteStateFunFact = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json(state);
+
+    if (!req.body.index) {
+        res.json({ 'message': 'State fun fact index value required' });
+    }
+    else if (!state.funfacts.length) {
+        res.json({ 'message': 'No Fun Facts found for ' + sState.state })
+    }
+    else if (req.body.index <= 0 || req.body.index > state.funfacts.length) {
+        res.json({ 'message': 'No Fun Fact found at that index for ' + sState.state })
+    }
+    else {
+        state.updateOne({ "name": urlPath },
+            {
+                "$pull": {
+                    "funfacts": {
+                        "_id": req.body.index
+                    }
+                }
+            });
+        res.json(state);
+    }
 }
 
 module.exports = {
