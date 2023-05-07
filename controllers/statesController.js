@@ -85,11 +85,11 @@ const addStateFunFact = async (req, res) => {
     else if (!result.funfacts.length) {
         res.json({'message': 'State fun facts value required'});
     }
-
-    result.funfacts.push(...req.body.funfacts);
-    result.save();
-
-    res.json(result);
+    else {
+        result.funfacts.push(...req.body.funfacts);
+        result.save();
+        res.json(result);
+    }
 }
 
 const editStateFunFact = async (req, res) => {
