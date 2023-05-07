@@ -128,7 +128,7 @@ const deleteStateFunFact = async (req, res) => {
         res.json({ 'message': 'No Fun Fact found at that index for ' + sState.state })
     }
     else {
-        state.updateOne({ "name": urlPath },
+        state.updateOne({ "stateCode": req.params.state },
             {
                 "$pull": {
                     "funfacts": {
