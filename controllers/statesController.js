@@ -79,6 +79,13 @@ const getStateAdmission = async (req, res) => {
 const addStateFunFact = async (req, res) => {
     const result = await State.findOne({ stateCode: req.params.state });
 
+    if (!(result.funfacts instanceof Array)) {
+        res.json({'message': 'State fun facts value must be an array'});
+    }
+    else if (!result.funfacts.length) {
+        res.json({'message': 'State fun facts value required'});
+    }
+
     result.funfacts.push(...req.body.funfacts);
     result.save();
 
