@@ -9,4 +9,22 @@ router.route('/')
 router.route('/:state')
     .get(verifyStates, statesController.getState);
 
+router.route('/:state/funfact')
+    .get(verifyStates, statesController.getStateFunFact)
+    .post(verifyStates, statesController.addStateFunFact)
+    .put(verifyStates, statesController.editStateFunFact)
+    .delete(verifyStates, statesController.deleteStateFunFact);
+
+router.route('/:state/capital')
+    .get(verifyStates, statesController.getStateCapital);
+
+router.route('/:state/nickname')
+    .get(verifyStates, statesController.getStateNickname);
+
+router.route('/:state/population')
+    .get(verifyStates, statesController.getStatePopulation);
+
+router.route('/:state/admission')
+    .get(verifyStates, statesController.getState);
+
 module.exports = router;
