@@ -27,7 +27,7 @@ const getAllStates = async (req, res) => {
         const state = await State.findOne({ stateCode: i.code });
 
         if (state.funfacts.length) {
-            result.funfacts = [...state.funfacts];
+            i.funfacts = [...state.funfacts];
         }
     }
     res.json(result);
@@ -67,7 +67,8 @@ const getStateAdmission = async (req, res) => {
 const addStateFunFact = async (req, res) => {
     const result = await State.findOne({ stateCode: req.params.state.toUpperCase() });
 
-    result.funfacts = [...req.body.funfacts];
+    result.funfacts.push(...req.body.funfacts);
+    result.save();
 
     res.json(result);
 }
