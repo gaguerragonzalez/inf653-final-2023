@@ -12,7 +12,7 @@ router.route('/:state')
 router.route('/:state/funfact')
     .get(verifyStates, statesController.getStateFunFact)
     .post(verifyStates, statesController.addStateFunFact)
-    .put(verifyStates, statesController.editStateFunFact)
+    .patch(verifyStates, statesController.editStateFunFact)
     .delete(verifyStates, statesController.deleteStateFunFact);
 
 router.route('/:state/capital')
