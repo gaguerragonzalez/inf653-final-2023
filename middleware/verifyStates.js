@@ -6,7 +6,7 @@ const verifyStates = async (req, res, next) => {
     const stateCodes = await fsPromises.readFile(path.join(__dirname, '..', 'model', 'stateCodes.json'))
 
     if (stateCodes.indexOf(req.params.state.toUpperCase()) >= 0) {
-        console.log(stateCodes.length)
+        req.params.state = req.params.state.toUpperCase();
         next();
     }
     else {

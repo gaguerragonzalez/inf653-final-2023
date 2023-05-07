@@ -34,38 +34,47 @@ const getAllStates = async (req, res) => {
 }
 
 const getState = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
+    const dbState = await State.findOne({ stateCode: state.code });
+    state.funfacts = [...dbState.funfacts];
     res.json(state);
 }
 
 const getStateFunFact = async (req, res) => {
-    const state = await State.findOne({});
+    const state = await State.findOne({ stateCode: req.params.state });
+    const sState = staticStates.find(st => st.code == req.params.state);
 
-    res.json(state);
+    if (state.funfacts.length) {
+        res.json({ funfact: state.funfacts[Math.floor(Math.random() * state.funfacts.length)] });
+    }
+    else {
+        res.json({ message: "No Fun Facts found for " + sstate.state + "." })
+    }
+
 }
 
 const getStateCapital = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
 const getStateNickname = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
 const getStatePopulation = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
 const getStateAdmission = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
 const addStateFunFact = async (req, res) => {
-    const result = await State.findOne({ stateCode: req.params.state.toUpperCase() });
+    const result = await State.findOne({ stateCode: req.params.state });
 
     result.funfacts.push(...req.body.funfacts);
     result.save();
@@ -74,12 +83,12 @@ const addStateFunFact = async (req, res) => {
 }
 
 const editStateFunFact = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
 const deleteStateFunFact = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state.toUpperCase());
+    const state = staticStates.find(st => st.code == req.params.state);
     res.json(state);
 }
 
