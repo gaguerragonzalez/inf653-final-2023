@@ -58,12 +58,12 @@ const getStateFunFact = async (req, res) => {
 
 const getStateCapital = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json({ "state": state.state, "capital_city": state.capital });
+    res.json({ "state": state.state, "capital": state.capital_city });
 }
 
 const getStateNickname = async (req, res) => {
     const state = staticStates.find(st => st.code == req.params.state);
-    res.json({ "state": state.state, "nickname": state.capital });
+    res.json({ "state": state.state, "nickname": state.nickname });
 }
 
 const getStatePopulation = async (req, res) => {
@@ -73,7 +73,7 @@ const getStatePopulation = async (req, res) => {
 
 const getStateAdmission = async (req, res) => {
     const state = state.find(st => st.code == req.params.state);
-    res.json({ "state": state.state, "admission": staticStates.admission_date });
+    res.json({ "state": state.state, "admitted": staticStates.admission_date });
 }
 
 const addStateFunFact = async (req, res) => {
