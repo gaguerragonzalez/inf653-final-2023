@@ -116,7 +116,8 @@ const editStateFunFact = async (req, res) => {
 }
 
 const deleteStateFunFact = async (req, res) => {
-    const state = staticStates.find(st => st.code == req.params.state);
+    const sState = staticStates.find(st => st.code == req.params.state);
+    const state = await State.findOne({ stateCode: req.params.state });
 
     if (!req.body.index) {
         res.json({ 'message': 'State fun fact index value required' });
