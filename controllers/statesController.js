@@ -130,7 +130,10 @@ const deleteStateFunFact = async (req, res) => {
         res.json({ 'message': 'No Fun Fact found at that index for ' + sState.state })
     }
     else {
-        state.update({ "stateCode": req.params.state }, { "$pull": { "funfacts": { "_id": req.body.index } }});
+        const toEdit = state.funfacts;
+        toEdit.splice(req.body.index - 1, 1);
+        state.funfacts = toEdit;
+        state.save();
         res.json(state);
     }
 }
