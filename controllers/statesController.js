@@ -79,11 +79,12 @@ const getStateAdmission = async (req, res) => {
 const addStateFunFact = async (req, res) => {
     const result = await State.findOne({ stateCode: req.params.state });
 
-    if (!(result.funfacts instanceof Array)) {
-        res.json({ 'message': 'State fun facts value must be an array' });
-    }
-    else if (!result.funfacts.length) {
+    console.log(req.body.funfacts)
+    if (!req.body.funfacts) {
         res.json({ 'message': 'State fun facts value required' });
+    }
+    else if (req.body.funfacts instanceof String || !(req.body.funfacts instanceof Array)) {
+        res.json({ 'message': 'State fun facts value must be an array' });
     }
     else {
         result.funfacts.push(...req.body.funfacts);
@@ -129,14 +130,7 @@ const deleteStateFunFact = async (req, res) => {
         res.json({ 'message': 'No Fun Fact found at that index for ' + sState.state })
     }
     else {
-        state.updateOne({ "stateCode": req.params.state },
-            {
-                "$pull": {
-                    "funfacts": {
-                        "_id": req.body.index
-                    }
-                }
-            });
+        state.update({ "stateCode": req.params.state }, { "$pull": { "funfacts": { "_id": req.body.index } }});
         res.json(state);
     }
 }
